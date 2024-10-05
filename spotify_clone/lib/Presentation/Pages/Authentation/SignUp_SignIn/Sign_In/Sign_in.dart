@@ -8,8 +8,8 @@ import 'package:spotify_clone/common/widgets/Button/Basic_button.dart';
 class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
 
-  Widget Register_Text() {
-    return Text(
+  Widget registerText() {
+    return const Text(
       "Sign In",
       style: TextStyle(
         fontSize: 40,
@@ -19,100 +19,95 @@ class SignInPage extends StatelessWidget {
     );
   }
 
- 
-  Widget fullNameField() {
-    return TextField(
+  Widget usernameField() {
+    return const TextField(
       decoration: InputDecoration(
         hintText: "Enter Username Or Email",
       ),
     );
   }
 
-  Widget EmailField() {
-    return TextField(
+  Widget passwordField() {
+    return const TextField(
+      obscureText: true, // Hides the password input
       decoration: InputDecoration(
         hintText: "Password",
       ),
     );
   }
 
-  // Widget PasswardField() {
-  //   return TextField(
-  //     decoration: InputDecoration(
-  //       hintText: "Passward",
-  //     ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: BasicAppbar(
         title: Image.asset(
           "images/logo.png",
-          height: 170,
-          width: 170,
+          height: screenHeight * 0.2, 
+          width: screenWidth * 0.5, 
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 50, horizontal: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Register_Text(),
-            SizedBox(
-              height: 50,
-            ),
-            fullNameField(),
-            SizedBox(
-              height: 50,
-            ),
-            EmailField(),
-            
-            SizedBox(
-              height: 70,
-            ),
-            CommonButton(height: 80,
-             onPressed: () {
-              Navigator.push(context,MaterialPageRoute(builder: (context) => HomePage(),));
-             }, 
-             title: "Sign In"
-             ),
-            
-
-             Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: 30,
-       
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "Not A Member ?",
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              color: Colors.black87,
-              fontSize: 17
-            ),
+        padding: EdgeInsets.symmetric(
+          vertical: screenHeight * 0.1, 
+          horizontal: screenWidth * 0.1, 
+        ),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              registerText(),
+              const SizedBox(height: 50),
+              usernameField(),
+              const SizedBox(height: 50),
+              passwordField(),
+              const SizedBox(height: 70),
+              CommonButton(
+                height: 80,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                  );
+                },
+                title: "Sign In",
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: screenHeight * 0.04),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Not A Member?",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black87,
+                        fontSize: 17,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => const RegisterPage()),
+                        );
+                      },
+                      child: const Text(
+                        "Register Now",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-      
-          TextButton(onPressed: () {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RegisterPage(),));
-          },
-           child:Text("Register Now",
-           style: TextStyle(
-            color: Colors.blue,
-            fontSize: 18
-           ),
-           )
-           )
-      
-        ],
-      ),
-    )
-
-          ],
         ),
       ),
     );
